@@ -19,29 +19,29 @@ import org.apache.log4j.Logger;
  */
 public class Node<T> {
 
-	private static Logger log = Logger.getLogger(Node.class);
+	protected static Logger log = Logger.getLogger(Node.class);
 
 	public static enum Cell {
 		TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT, TOP_RIGHT
 	}
 
-	private Dimension bounds;
-	private Point startCoordinates;
-	private int maxDepth;
-	private int maxElements;
-	private int depth;
+	protected Dimension bounds;
+	protected Point startCoordinates;
+	protected int maxDepth;
+	protected int maxElements;
+	protected int depth;
 
 	/**
 	 * Default value for amount of elements
 	 */
-	private final int MAX_ELEMENTS = 4;
+	protected final int MAX_ELEMENTS = 4;
 
 	/**
 	 * Default value for max depth
 	 */
-	private final int MAX_DEPTH = 4;
+	protected final int MAX_DEPTH = 4;
 
-	private Map<Cell, Node<T>> nodes = new HashMap<Cell, Node<T>>();
+	protected Map<Cell, Node<T>> nodes = new HashMap<Cell, Node<T>>();
 
 	/**
 	 * Holds all elements for this node
@@ -164,7 +164,7 @@ public class Node<T> {
 	 * 
 	 * @return
 	 */
-	public Vector<NodeElement<T>> getElements() {
+	public Vector<? extends NodeElement<T>> getElements() {
 		return this.elements;
 	}
 
@@ -174,7 +174,7 @@ public class Node<T> {
 	 * @param coordinates
 	 * @return
 	 */
-	public Vector<NodeElement<T>> getElements(Point coordinates) {
+	public Vector<? extends NodeElement<T>> getElements(Point coordinates) {
 
 		// Check if this node has already been subdivided. Therefor this node
 		// should contain no elements

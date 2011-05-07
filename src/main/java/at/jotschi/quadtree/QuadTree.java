@@ -13,9 +13,9 @@ import java.util.Vector;
  */
 public class QuadTree<T> {
 
-	private Node<T> rootNode;
-	private Dimension size;
-	private Point startCoordinates;
+	protected Node<T> rootNode;
+	protected Dimension size;
+	protected Point startCoordinates;
 
 	/**
 	 * Create a new QuadTree with the give start coordinates and size
@@ -57,6 +57,48 @@ public class QuadTree<T> {
 	 */
 	public void insert(int x, int y, T element) {
 		insert(new Point(x, y), element);
+	}
+
+	/**
+	 * Add a new element to the QuadTree that has a specific dimension/size
+	 * 
+	 * @param point
+	 * @param size
+	 * @param element
+	 */
+	public void insert(Point point, Dimension size, T element) {
+
+		// Check if the element coordinates are within bounds of the quadtree
+		if (point.x > startCoordinates.x + size.width
+				|| point.x < startCoordinates.x) {
+			throw new IndexOutOfBoundsException(
+					"The x coordinate must be within bounds of ["
+							+ startCoordinates.x + "] to [" + size.width + "]");
+		}
+		if (point.y > startCoordinates.y + size.height
+				|| point.y < startCoordinates.y) {
+			throw new IndexOutOfBoundsException(
+					"The y coordinate must be within bounds of ["
+							+ startCoordinates.y + "] to [" + size.height + "]");
+		}
+		
+		//Check if the right bottom corner is within bounds 
+		if (point.x+size.width > startCoordinates.x + size.width
+				|| point.x < startCoordinates.x) {
+			throw new IndexOutOfBoundsException(
+					"The x coordinate must be within bounds of ["
+							+ startCoordinates.x + "] to [" + size.width + "]");
+		}
+		if (point.y+size.width > startCoordinates.y + size.height
+				|| point.y < startCoordinates.y) {
+			throw new IndexOutOfBoundsException(
+					"The y coordinate must be within bounds of ["
+							+ startCoordinates.y + "] to [" + size.height + "]");
+		}
+			
+		
+		this.rootNode.insert(new NodeElement<T>(point, element));
+	
 	}
 
 	/**
@@ -106,8 +148,7 @@ public class QuadTree<T> {
 	 * @param coordinates
 	 * @return
 	 */
-	public Vector<NodeElement<T>> getElements(Point coordinates) {
+	public Vector<? extends NodeElement<T>> getElements(Point coordinates) {
 		return this.rootNode.getElements(coordinates);
-
 	}
 }

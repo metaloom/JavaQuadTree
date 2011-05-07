@@ -8,9 +8,8 @@ import java.awt.Point;
  * @author jotschi
  * 
  */
+@SuppressWarnings("serial")
 public class NodeElement<T> extends Point {
-
-	private static final long serialVersionUID = -6818452324965717494L;
 
 	private T element;
 
