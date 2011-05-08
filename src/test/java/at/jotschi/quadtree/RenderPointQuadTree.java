@@ -4,14 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 import java.util.Vector;
 
 import at.jotschi.quadtree.AbstractNode.Cell;
 import at.jotschi.quadtree.gui.QuadTreePanel;
-import at.jotschi.quadtree.impl.PointNode;
-import at.jotschi.quadtree.impl.PointQuadTree;
+import at.jotschi.quadtree.point.PointNode;
+import at.jotschi.quadtree.point.PointQuadTree;
 
 @SuppressWarnings("serial")
 public class RenderPointQuadTree extends QuadTreePanel {
@@ -103,6 +104,7 @@ public class RenderPointQuadTree extends QuadTreePanel {
 		}
 	}
 
+	
 	public void mouseClicked(MouseEvent e) {
 
 		Point p = e.getPoint();

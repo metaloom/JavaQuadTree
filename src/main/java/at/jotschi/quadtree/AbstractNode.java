@@ -2,18 +2,19 @@ package at.jotschi.quadtree;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.Map;
 
-public abstract class AbstractNode {
+public abstract class AbstractNode<T> {
 
 	/**
 	 * Default value for amount of elements
 	 */
-	protected final int MAX_ELEMENTS = 4;
+	protected final static int MAX_ELEMENTS = 4;
 
 	/**
 	 * Default value for max depth
 	 */
-	protected final int MAX_DEPTH = 4;
+	protected final static int MAX_DEPTH = 4;
 
 	public static enum Cell {
 		TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT, TOP_RIGHT
@@ -26,11 +27,7 @@ public abstract class AbstractNode {
 	protected int depth;
 
 	public AbstractNode(Point startCoordinates, Dimension bounds, int depth) {
-		this.startCoordinates = startCoordinates;
-		this.bounds = bounds;
-		this.depth = depth;
-		this.maxDepth = MAX_DEPTH;
-		this.maxElements = MAX_ELEMENTS;
+		this(startCoordinates, bounds, depth, MAX_ELEMENTS, MAX_DEPTH);
 	}
 
 	public AbstractNode(Point startCoordinates, Dimension bounds, int depth,
@@ -70,6 +67,15 @@ public abstract class AbstractNode {
 	}
 
 	/**
+	 * Returns the depth of this node
+	 * 
+	 * @return
+	 */
+	public int getDepth() {
+		return this.depth;
+	}
+
+	/**
 	 * Returns the max depth
 	 * 
 	 * @return
@@ -77,7 +83,11 @@ public abstract class AbstractNode {
 	public int getMaxDepth() {
 		return this.maxDepth;
 	}
-	
-	public abstract void subdivide(); 
+
+	public abstract void subdivide();
+
+	public abstract void clear();
+
+	public abstract Map<Cell, AbstractNode<T>> getSubNodes();
 
 }

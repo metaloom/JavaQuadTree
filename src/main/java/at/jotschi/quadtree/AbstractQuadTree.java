@@ -3,8 +3,6 @@ package at.jotschi.quadtree;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import at.jotschi.quadtree.impl.PointNode;
-
 public abstract class AbstractQuadTree<T> {
 
 	protected Dimension size;
@@ -14,7 +12,7 @@ public abstract class AbstractQuadTree<T> {
 		this.size = size;
 		this.startCoordinates = startCoordinates;
 	}
-	
+
 	/**
 	 * Returns the size
 	 * 
@@ -32,18 +30,17 @@ public abstract class AbstractQuadTree<T> {
 	public Point getStartCoordinates() {
 		return this.startCoordinates;
 	}
-	
+
 	/**
 	 * Clear the QuadTree
 	 */
 	public abstract void clear();
 
-	
 	/**
 	 * Return the root node of this quad tree
+	 * 
 	 * @return
 	 */
-	public abstract PointNode<T> getRootNode();
+	public abstract AbstractNode<T> getRootNode();
 
-	
 }

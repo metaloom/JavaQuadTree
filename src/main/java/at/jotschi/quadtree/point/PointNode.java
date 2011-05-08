@@ -1,4 +1,4 @@
-package at.jotschi.quadtree.impl;
+package at.jotschi.quadtree.point;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -59,7 +59,6 @@ public class PointNode<T> extends AbstractNode {
 		return this.nodes;
 	}
 
-	
 	/**
 	 * Returns the cell of this element
 	 * 
@@ -112,8 +111,7 @@ public class PointNode<T> extends AbstractNode {
 	 * @param coordinates
 	 * @return
 	 */
-	public Vector<PointNodeElement<T>> getElements(
-			Point coordinates) {
+	public Vector<PointNodeElement<T>> getElements(Point coordinates) {
 
 		// Check if this node has already been subdivided. Therefor this node
 		// should contain no elements

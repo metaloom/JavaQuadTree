@@ -1,4 +1,4 @@
-package at.jotschi.quadtree.impl;
+package at.jotschi.quadtree.point;
 
 import java.awt.Dimension;
 import java.awt.Point;

@@ -1,4 +1,4 @@
-package at.jotschi.quadtree.impl;
+package at.jotschi.quadtree.point;
 
 import java.awt.Point;
 
@@ -9,7 +9,6 @@ public class PointNodeElement<T> extends AbstractNodeElement<T> {
 
 	public PointNodeElement(Point coordinates, T element) {
 		super(coordinates, element);
-		// TODO Auto-generated constructor stub
 	}
 
 }

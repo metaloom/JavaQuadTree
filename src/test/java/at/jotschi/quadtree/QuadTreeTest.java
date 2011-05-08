@@ -6,8 +6,8 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import at.jotschi.quadtree.impl.PointQuadTree;
-import at.jotschi.quadtree.impl.SpacialQuadTree;
+import at.jotschi.quadtree.point.PointQuadTree;
+import at.jotschi.quadtree.spacial.SpatialQuadTree;
 
 /**
  * Unit test for simple tree setup.
@@ -38,7 +38,7 @@ public class QuadTreeTest {
 
 	@Test
 	public void quadTreeBoundsTest() {
-		SpacialQuadTree<String> tree = new SpacialQuadTree<String>(
+		SpatialQuadTree<String> tree = new SpatialQuadTree<String>(
 				new Point(0, 0), new Dimension(600, 600));
 		tree.insert(new Point(11, 3), new Dimension(10, 10), "1");
 		tree.insert(new Point(22, 3), new Dimension(30, 10), "2");

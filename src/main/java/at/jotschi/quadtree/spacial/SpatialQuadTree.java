@@ -1,7 +1,9 @@
-package at.jotschi.quadtree.impl;
+package at.jotschi.quadtree.spacial;
 
 import java.awt.Dimension;
 import java.awt.Point;
+
+import org.apache.log4j.Logger;
 
 import at.jotschi.quadtree.AbstractQuadTree;
 
@@ -13,9 +15,11 @@ import at.jotschi.quadtree.AbstractQuadTree;
  * 
  * @param <T>
  */
-public class SpacialQuadTree<T> extends AbstractQuadTree<T> {
+public class SpatialQuadTree<T> extends AbstractQuadTree<T> {
 
-	protected SpacialNode<T> rootNode;
+	protected static Logger log = Logger.getLogger(SpatialQuadTree.class);
+	
+	protected SpatialNode<T> rootNode;
 
 	/**
 	 * Create a new QuadTree with the give start coordinates and size
@@ -23,9 +27,9 @@ public class SpacialQuadTree<T> extends AbstractQuadTree<T> {
 	 * @param startCorrdinates
 	 * @param size
 	 */
-	public SpacialQuadTree(Point startCoordinates, Dimension size) {
+	public SpatialQuadTree(Point startCoordinates, Dimension size) {
 		super(startCoordinates, size);
-		this.rootNode = new SpacialNode<T>(startCoordinates, size, 0);
+		this.rootNode = new SpatialNode<T>(startCoordinates, size, 0);
 	}
 
 	/**
@@ -35,9 +39,7 @@ public class SpacialQuadTree<T> extends AbstractQuadTree<T> {
 	 * @param elementSize
 	 */
 	public void insert(T element, Dimension elementSize) {
-
-		// TODO check element size
-		this.rootNode.insert(new SpacialNodeElement<T>(element, elementSize));
+		this.rootNode.insert(new SpatialNodeElement<T>(element, elementSize));
 
 	}
 
@@ -83,7 +85,7 @@ public class SpacialQuadTree<T> extends AbstractQuadTree<T> {
 							+ "] / [" + point.x + elementSize.height + "]");
 		}
 
-		this.rootNode.insert(new SpacialNodeElement<T>(point, elementSize,
+		this.rootNode.insert(new SpatialNodeElement<T>(point, elementSize,
 				element));
 
 	}
@@ -93,7 +95,7 @@ public class SpacialQuadTree<T> extends AbstractQuadTree<T> {
 	 * 
 	 * @return
 	 */
-	public SpacialNode<T> getRootNode() {
+	public SpatialNode<T> getRootNode() {
 		return this.rootNode;
 	}
 
