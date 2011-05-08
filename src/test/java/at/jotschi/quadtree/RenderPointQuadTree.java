@@ -51,6 +51,9 @@ public class RenderPointQuadTree extends QuadTreePanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		g.drawString(
+				"Left click to add new points. Right click to highlight all elements of a selected cell/node.",
+				100, 80);
 		PointNode<String> rootNode = tree.getRootNode();
 		drawCells(rootNode, g);
 	}
@@ -104,7 +107,18 @@ public class RenderPointQuadTree extends QuadTreePanel {
 		}
 	}
 
-	
+	public void keyReleased(KeyEvent e) {
+
+		if (e.getKeyCode() == 27) {
+			System.exit(10);
+		} else if (e.getKeyCode() == 67) {
+			log.debug("Invoking clearing of tree.");
+			tree.clear();
+			repaint();
+		}
+
+	}
+
 	public void mouseClicked(MouseEvent e) {
 
 		Point p = e.getPoint();

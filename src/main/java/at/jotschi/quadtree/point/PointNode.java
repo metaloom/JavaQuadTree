@@ -211,5 +211,6 @@ public class PointNode<T> extends AbstractNode {
 			node.clear();
 		}
 		elements.clear();
+		nodes.clear();
 	}
 }
