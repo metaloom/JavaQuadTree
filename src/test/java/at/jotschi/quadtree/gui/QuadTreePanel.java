@@ -1,4 +1,4 @@
-package at.jotschi.quadtree;
+package at.jotschi.quadtree.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,12 +16,16 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 
+import at.jotschi.quadtree.Node;
+import at.jotschi.quadtree.NodeElement;
+import at.jotschi.quadtree.QuadTree;
 import at.jotschi.quadtree.Node.Cell;
 
 @SuppressWarnings("serial")
 public class QuadTreePanel extends JPanel implements KeyListener, MouseListener {
 
 	protected QuadTree<String> tree;
+	
 	protected Vector<NodeElement<String>> selectedElements = new Vector<NodeElement<String>>();
 
 	protected static Logger log = Logger.getLogger(QuadTreePanel.class);
@@ -41,10 +45,8 @@ public class QuadTreePanel extends JPanel implements KeyListener, MouseListener 
 		f.addMouseListener(this);
 		f.add(this);
 		f.setLocationRelativeTo(null);
-
 		f.setSize(600, 600);
 		f.setVisible(true);
-
 	}
 
 	/**
@@ -78,7 +80,7 @@ public class QuadTreePanel extends JPanel implements KeyListener, MouseListener 
 	 * @param node
 	 * @param g
 	 */
-	private void drawCells(Node<String> node, Graphics g) {
+	protected void drawCells(Node<String> node, Graphics g) {
 
 		Dimension bounds = node.getBounds();
 		Point startCoordinates = node.getStartCoordinates();
@@ -93,20 +95,32 @@ public class QuadTreePanel extends JPanel implements KeyListener, MouseListener 
 		}
 
 		// Draw points of this node
+		drawElements(node, g);
+
+		// Draw selected elements
+		drawSelectedElements(g);
+	}
+
+	public void drawSelectedElements(Graphics g) {
+		g.setColor(Color.RED);
+		for (NodeElement<String> element : selectedElements) {
+			g.drawOval((int) element.getX(), (int) element.getY(), 4, 4);
+		}
+		g.setColor(Color.BLACK);
+	}
+	
+	/**
+	 * Draw all elements of the node
+	 * 
+	 * @param g
+	 */
+	public void drawElements(Node node, Graphics g) {
+
 		Vector<NodeElement<String>> elements = (Vector<NodeElement<String>>) node
 				.getElements();
 		for (NodeElement<String> element : elements) {
 			g.drawOval((int) element.getX(), (int) element.getY(), 4, 4);
 		}
-
-		// Draw selected elements
-		g.setColor(Color.RED);
-
-		for (NodeElement<String> element : selectedElements) {
-			g.drawOval((int) element.getX(), (int) element.getY(), 4, 4);
-		}
-		g.setColor(Color.BLACK);
-
 	}
 
 	public void keyTyped(KeyEvent e) {

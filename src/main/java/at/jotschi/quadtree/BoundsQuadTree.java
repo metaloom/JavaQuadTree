@@ -13,6 +13,8 @@ import java.awt.Point;
  */
 public class BoundsQuadTree<T> extends QuadTree<T> {
 
+	protected BoundsNode<T> rootNode;
+
 	/**
 	 * Create a new QuadTree with the give start coordinates and size
 	 * 
@@ -67,9 +69,18 @@ public class BoundsQuadTree<T> extends QuadTree<T> {
 							+ "] / [" + point.x + elementSize.height + "]");
 		}
 
-		this.rootNode.insert(new BoundsNodeElement<T>(point, elementSize, element));
+		this.rootNode.insert(new BoundsNodeElement<T>(point, elementSize,
+				element));
 
 	}
-	
+
+	/**
+	 * Returns the rootNode of this tree
+	 * 
+	 * @return
+	 */
+	public BoundsNode<T> getRootNode() {
+		return this.rootNode;
+	}
 
 }
