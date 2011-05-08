@@ -9,7 +9,7 @@ import java.awt.Point;
  * 
  */
 @SuppressWarnings("serial")
-public class NodeElement<T> extends Point {
+public abstract class AbstractNodeElement<T> extends Point {
 
 	private T element;
 
@@ -20,10 +20,13 @@ public class NodeElement<T> extends Point {
 	 * @param y
 	 * @param element
 	 */
-	public NodeElement(Point coordinates, T element) {
+	public AbstractNodeElement(Point coordinates, T element) {
 		super(coordinates);
 		this.element = element;
+	}
 
+	public AbstractNodeElement(T element) {
+		this.element = element;
 	}
 
 	/**

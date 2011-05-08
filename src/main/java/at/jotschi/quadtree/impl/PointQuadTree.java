@@ -1,8 +1,11 @@
-package at.jotschi.quadtree;
+package at.jotschi.quadtree.impl;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.Vector;
+
+import at.jotschi.quadtree.AbstractNodeElement;
+import at.jotschi.quadtree.AbstractQuadTree;
 
 /**
  * Creates a new QuadTree that can hold the given type of elements
@@ -11,11 +14,9 @@ import java.util.Vector;
  * 
  * @param <T>
  */
-public class QuadTree<T> {
+public class PointQuadTree<T> extends AbstractQuadTree<T> {
 
-	protected Node<T> rootNode;
-	protected Dimension size;
-	protected Point startCoordinates;
+	protected PointNode<T> rootNode;
 
 	/**
 	 * Create a new QuadTree with the give start coordinates and size
@@ -23,29 +24,9 @@ public class QuadTree<T> {
 	 * @param startCorrdinates
 	 * @param size
 	 */
-	public QuadTree(Point startCoordinates, Dimension size) {
-
-		this.size = size;
-		this.startCoordinates = startCoordinates;
-		this.rootNode = new Node<T>(startCoordinates, size, 0);
-	}
-
-	/**
-	 * Returns the size
-	 * 
-	 * @return
-	 */
-	public Dimension getSize() {
-		return this.size;
-	}
-
-	/**
-	 * Returns the startCoordinates
-	 * 
-	 * @return
-	 */
-	public Point getStartCoordinates() {
-		return this.startCoordinates;
+	public PointQuadTree(Point startCoordinates, Dimension size) {
+		super(startCoordinates, size);
+		this.rootNode = new PointNode<T>(startCoordinates, size, 0);
 	}
 
 	/**
@@ -81,24 +62,23 @@ public class QuadTree<T> {
 					"The y coordinate must be within bounds of ["
 							+ startCoordinates.y + "] to [" + size.height + "]");
 		}
-		
-		//Check if the right bottom corner is within bounds 
-		if (point.x+size.width > startCoordinates.x + size.width
+
+		// Check if the right bottom corner is within bounds
+		if (point.x + size.width > startCoordinates.x + size.width
 				|| point.x < startCoordinates.x) {
 			throw new IndexOutOfBoundsException(
 					"The x coordinate must be within bounds of ["
 							+ startCoordinates.x + "] to [" + size.width + "]");
 		}
-		if (point.y+size.width > startCoordinates.y + size.height
+		if (point.y + size.width > startCoordinates.y + size.height
 				|| point.y < startCoordinates.y) {
 			throw new IndexOutOfBoundsException(
 					"The y coordinate must be within bounds of ["
 							+ startCoordinates.y + "] to [" + size.height + "]");
 		}
-			
-		
-		this.rootNode.insert(new NodeElement<T>(point, element));
-	
+
+		this.rootNode.insert(new PointNodeElement<T>(point, element));
+
 	}
 
 	/**
@@ -123,14 +103,7 @@ public class QuadTree<T> {
 							+ startCoordinates.y + "] to [" + size.height + "]");
 		}
 
-		this.rootNode.insert(new NodeElement<T>(point, element));
-	}
-
-	/**
-	 * Clear the QuadTree
-	 */
-	public void clear() {
-		this.rootNode.clear();
+		this.rootNode.insert(new PointNodeElement<T>(point, element));
 	}
 
 	/**
@@ -138,7 +111,7 @@ public class QuadTree<T> {
 	 * 
 	 * @return
 	 */
-	public Node<T> getRootNode() {
+	public PointNode<T> getRootNode() {
 		return this.rootNode;
 	}
 
@@ -148,7 +121,12 @@ public class QuadTree<T> {
 	 * @param coordinates
 	 * @return
 	 */
-	public Vector<? extends NodeElement<T>> getElements(Point coordinates) {
+	public Vector<? extends AbstractNodeElement<T>> getElements(Point coordinates) {
 		return this.rootNode.getElements(coordinates);
+	}
+
+	@Override
+	public void clear() {
+		this.rootNode.clear();
 	}
 }

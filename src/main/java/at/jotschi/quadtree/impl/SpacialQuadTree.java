@@ -1,7 +1,9 @@
-package at.jotschi.quadtree;
+package at.jotschi.quadtree.impl;
 
 import java.awt.Dimension;
 import java.awt.Point;
+
+import at.jotschi.quadtree.AbstractQuadTree;
 
 /**
  * Creates a new QuadTree that can hold the given type of elements. Each element
@@ -11,9 +13,9 @@ import java.awt.Point;
  * 
  * @param <T>
  */
-public class BoundsQuadTree<T> extends QuadTree<T> {
+public class SpacialQuadTree<T> extends AbstractQuadTree<T> {
 
-	protected BoundsNode<T> rootNode;
+	protected SpacialNode<T> rootNode;
 
 	/**
 	 * Create a new QuadTree with the give start coordinates and size
@@ -21,11 +23,22 @@ public class BoundsQuadTree<T> extends QuadTree<T> {
 	 * @param startCorrdinates
 	 * @param size
 	 */
-	public BoundsQuadTree(Point startCoordinates, Dimension size) {
-
+	public SpacialQuadTree(Point startCoordinates, Dimension size) {
 		super(startCoordinates, size);
+		this.rootNode = new SpacialNode<T>(startCoordinates, size, 0);
+	}
 
-		this.rootNode = new BoundsNode<T>(startCoordinates, size, 0);
+	/**
+	 * Insert the element with the given size in the next free cell
+	 * 
+	 * @param element
+	 * @param elementSize
+	 */
+	public void insert(T element, Dimension elementSize) {
+
+		// TODO check element size
+		this.rootNode.insert(new SpacialNodeElement<T>(element, elementSize));
+
 	}
 
 	/**
@@ -61,6 +74,7 @@ public class BoundsQuadTree<T> extends QuadTree<T> {
 							+ startCoordinates.x + "] to [" + size.width
 							+ "] / [" + point.x + elementSize.width + "]");
 		}
+
 		if (point.y + elementSize.height > startCoordinates.y + size.height
 				|| point.y < startCoordinates.y) {
 			throw new IndexOutOfBoundsException(
@@ -69,7 +83,7 @@ public class BoundsQuadTree<T> extends QuadTree<T> {
 							+ "] / [" + point.x + elementSize.height + "]");
 		}
 
-		this.rootNode.insert(new BoundsNodeElement<T>(point, elementSize,
+		this.rootNode.insert(new SpacialNodeElement<T>(point, elementSize,
 				element));
 
 	}
@@ -79,8 +93,13 @@ public class BoundsQuadTree<T> extends QuadTree<T> {
 	 * 
 	 * @return
 	 */
-	public BoundsNode<T> getRootNode() {
+	public SpacialNode<T> getRootNode() {
 		return this.rootNode;
+	}
+
+	@Override
+	public void clear() {
+		this.rootNode.clear();
 	}
 
 }

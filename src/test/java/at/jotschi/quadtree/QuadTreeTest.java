@@ -6,6 +6,9 @@ import java.util.Vector;
 
 import org.junit.Test;
 
+import at.jotschi.quadtree.impl.PointQuadTree;
+import at.jotschi.quadtree.impl.SpacialQuadTree;
+
 /**
  * Unit test for simple tree setup.
  */
@@ -13,7 +16,7 @@ public class QuadTreeTest {
 
 	@Test
 	public void testApp() {
-		QuadTree<String> tree = new QuadTree<String>(new Point(0, 0),
+		PointQuadTree<String> tree = new PointQuadTree<String>(new Point(0, 0),
 				new Dimension(600, 600));
 		tree.insert(1, 3, "1");
 		tree.insert(11, 32, "2");
@@ -24,10 +27,10 @@ public class QuadTreeTest {
 		tree.insert(552, 555, "6");
 		tree.insert(551, 555, "7");
 
-		Vector<NodeElement<String>> elements = (Vector<NodeElement<String>>) tree
+		Vector<AbstractNodeElement<String>> elements = (Vector<AbstractNodeElement<String>>) tree
 				.getElements(new Point(500, 550));
 
-		for (NodeElement<String> element : elements) {
+		for (AbstractNodeElement<String> element : elements) {
 			System.out.println("[" + element.getX() + "-" + element.getY()
 					+ "] " + element.getElement());
 		}
@@ -35,7 +38,7 @@ public class QuadTreeTest {
 
 	@Test
 	public void quadTreeBoundsTest() {
-		BoundsQuadTree<String> tree = new BoundsQuadTree<String>(
+		SpacialQuadTree<String> tree = new SpacialQuadTree<String>(
 				new Point(0, 0), new Dimension(600, 600));
 		tree.insert(new Point(11, 3), new Dimension(10, 10), "1");
 		tree.insert(new Point(22, 3), new Dimension(30, 10), "2");
