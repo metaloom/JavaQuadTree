@@ -146,7 +146,7 @@ public class PointNode<T> extends AbstractNode {
 
 		// Only subdivide the node if it contain more than MAX_CHILDREN and is
 		// not the deepest node
-		if (!(this.depth >= MAX_DEPTH) && this.elements.size() > MAX_ELEMENTS) {
+		if (!(this.depth >= maxDepth) && this.elements.size() > maxElements) {
 			this.subdivide();
 
 			// Recall insert for each element. This will move all elements of
@@ -184,22 +184,24 @@ public class PointNode<T> extends AbstractNode {
 		PointNode<T> cellNode = null;
 
 		// top left
-		cellNode = new PointNode<T>(new Point(bx, by), newBounds, depth);
+		cellNode = new PointNode<T>(new Point(bx, by), newBounds, depth,
+				this.maxDepth, this.maxElements);
 		this.nodes.put(Cell.TOP_LEFT, cellNode);
 
 		// top right
 		cellNode = new PointNode<T>(new Point(newXStartCoordinate, by),
-				newBounds, depth);
+				newBounds, depth, this.maxDepth, this.maxElements);
 		this.nodes.put(Cell.TOP_RIGHT, cellNode);
 
 		// bottom left
 		cellNode = new PointNode<T>(new Point(bx, newYStartCoordinate),
-				newBounds, depth);
+				newBounds, depth, this.maxDepth, this.maxElements);
 		this.nodes.put(Cell.BOTTOM_LEFT, cellNode);
 
 		// bottom right
 		cellNode = new PointNode<T>(new Point(newXStartCoordinate,
-				newYStartCoordinate), newBounds, depth);
+				newYStartCoordinate), newBounds, depth, this.maxDepth,
+				this.maxElements);
 		this.nodes.put(Cell.BOTTOM_RIGHT, cellNode);
 	}
 

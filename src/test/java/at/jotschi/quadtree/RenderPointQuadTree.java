@@ -37,7 +37,7 @@ public class RenderPointQuadTree extends QuadTreePanel {
 	 */
 	protected PointQuadTree<String> createQuadTree() {
 		PointQuadTree<String> tree = new PointQuadTree<String>(new Point(100,
-				100), new Dimension(400, 400));
+				100), new Dimension(400, 400), 8, 4);
 
 		for (int i = 0; i < 200; i++) {
 			int x = (int) (Math.random() * 1000 * 0.4) + 100;
@@ -88,7 +88,7 @@ public class RenderPointQuadTree extends QuadTreePanel {
 	public void drawSelectedElements(Graphics g) {
 		g.setColor(Color.RED);
 		for (AbstractNodeElement<String> element : selectedElements) {
-			g.drawOval((int) element.getX(), (int) element.getY(), 4, 4);
+			g.drawOval((int) element.getX()-2, (int) element.getY()-2, 4, 4);
 		}
 		g.setColor(Color.BLACK);
 	}
@@ -103,7 +103,9 @@ public class RenderPointQuadTree extends QuadTreePanel {
 		Vector<AbstractNodeElement<String>> elements = (Vector<AbstractNodeElement<String>>) node
 				.getElements();
 		for (AbstractNodeElement<String> element : elements) {
-			g.drawOval((int) element.getX(), (int) element.getY(), 4, 4);
+			int x = (int) element.getX();
+			int y = (int) element.getY();
+			g.drawLine(x, y, x, y);
 		}
 	}
 

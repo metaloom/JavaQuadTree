@@ -31,11 +31,11 @@ public abstract class AbstractNode<T> {
 	}
 
 	public AbstractNode(Point startCoordinates, Dimension bounds, int depth,
-			int maxDepth, int maxChildren) {
+			int maxDepth, int maxElements) {
 		this.startCoordinates = startCoordinates;
 		this.bounds = bounds;
 		this.maxDepth = maxDepth;
-		this.maxElements = maxChildren;
+		this.maxElements = maxElements;
 		this.depth = depth;
 	}
 

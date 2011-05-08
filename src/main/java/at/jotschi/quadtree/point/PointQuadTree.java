@@ -28,6 +28,11 @@ public class PointQuadTree<T> extends AbstractQuadTree<T> {
 		super(startCoordinates, size);
 		this.rootNode = new PointNode<T>(startCoordinates, size, 0);
 	}
+	
+	public PointQuadTree(Point startCoordinates, Dimension size, int maxDepth, int maxChildren) {
+		super(startCoordinates, size);
+		this.rootNode = new PointNode<T>(startCoordinates, size, 0,maxDepth,maxChildren);
+	}
 
 	/**
 	 * Add a new element to the QuadTree
