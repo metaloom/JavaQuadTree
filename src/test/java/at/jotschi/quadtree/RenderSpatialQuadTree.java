@@ -50,8 +50,7 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 		Point startCoordinates = new Point(100, 100);
 		Dimension size = new Dimension(512, 512);
 
-		SpatialQuadTree<Image> tree = new SpatialQuadTree<Image>(
-				startCoordinates, size);
+		SpatialQuadTree<Image> tree = new SpatialQuadTree<Image>(startCoordinates, size);
 
 		int elementSize = 32;
 		for (int i = 0; i < 56; i++) {
@@ -89,14 +88,13 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 		int i = (int) (Math.random() * 4);
 		String fileName = types[i] + "_" + size + ".jpg";
 		log.debug("Loading image: " + fileName);
-		Image image = ImageIO.read(ClassLoader
-				.getSystemResourceAsStream(fileName));
+		Image image = ImageIO.read(ClassLoader.getSystemResourceAsStream(fileName));
 
 		return image;
 	}
 
 	protected void paintComponent(Graphics g) {
-		
+
 		g.drawString("Hit space key to draw elements of the next level of the quadtree.", 100, 80);
 		SpatialNode<Image> rootNode = tree.getRootNode();
 		drawCells(rootNode, g);
@@ -106,8 +104,7 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 		Dimension bounds = node.getBounds();
 		Point startCoordinates = node.getStartCoordinates();
 		// Draw node bounds
-		g.drawRect(startCoordinates.x, startCoordinates.y, bounds.width,
-				bounds.height);
+		g.drawRect(startCoordinates.x, startCoordinates.y, bounds.width, bounds.height);
 
 		// Draw subnodes
 		Map<Cell, SpatialNode<Image>> subNodes = node.getSubNodes();
@@ -141,16 +138,7 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 
 		SpatialNodeElement<Image> element = node.getElement();
 		if (element != null) {
-			// int i = (int) (Math.random() * 255);
-			// g.setColor(new Color(1, i, 1));
-
-			g.drawImage(element.getElement(), (int) element.getX(),
-					(int) element.getY(), null);
-			// g.drawImage(element.getElement(),element.getX(), (int)
-			// element.getY(),element.getWidth(), element.getHeight() ,null);
-			// g.fillRect((int) element.getX(), (int) element.getY(),
-			// element.getWidth(), element.getHeight());
-			// g.setColor(Color.BLACK);
+			g.drawImage(element.getElement(), (int) element.getX(), (int) element.getY(), null);
 		}
 
 	}

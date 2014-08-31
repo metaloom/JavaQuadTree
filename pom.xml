@@ -4,8 +4,14 @@
 
 	<groupId>at.jotschi</groupId>
 	<artifactId>QuadTree</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.5.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>de.jotschi</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
 
 	<name>QuadTree</name>
 	<url>http://maven.apache.org</url>
@@ -18,7 +24,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -26,6 +31,17 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
 		</dependency>
-
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>maven.jotschi.de</id>
+			<url>http://maven.jotschi.de/maven2</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>
