@@ -18,7 +18,7 @@ public class SpatialQuadTreeImpl<T> extends AbstractQuadTree<T> implements Spati
 	/**
 	 * Create a new QuadTree with the give start coordinates and size
 	 * 
-	 * @param startCorrdinates
+	 * @param startCoordinates
 	 * @param size
 	 */
 	public SpatialQuadTreeImpl(Point startCoordinates, Size size) {
