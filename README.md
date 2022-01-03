@@ -2,6 +2,17 @@
 
 This project contains two very basic QuadTree implementation for Java.
 
+## Maven
+
+```xml
+<dependency>
+  <groupId>io.metaloom.quadtree</groupId>
+  <artifactId>quadtree</artifactId>
+  <version>0.1.0</version>
+</dependency>
+```
+
+
 ## Point Quad Tree
 
 The point quad tree allows insertion of elements with provided coordinates. The quad tree will automatically subdivide when the maximum limit per cell has been reached.
