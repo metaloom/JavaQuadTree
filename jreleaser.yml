@@ -1,6 +1,6 @@
 project:
   name: quadtree
-  version: 1.0.0
+  version: 0.1.0
   versionPattern: SEMVER
 
   description: A point and spatial quad tree implementation for Java.
