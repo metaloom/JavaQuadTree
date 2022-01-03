@@ -1,8 +1,9 @@
 package io.metaloom.quadtree.point;
 
+import java.util.Vector;
+
 import io.metaloom.quadtree.QuadTree;
 import io.metaloom.quadtree.Size;
-import io.metaloom.quadtree.point.impl.PointNode;
 
 public interface PointQuadTree<T> extends QuadTree<T> {
 
@@ -13,7 +14,7 @@ public interface PointQuadTree<T> extends QuadTree<T> {
 	 * @param size
 	 * @param element
 	 */
-	void insert(Point point, Size size, T element);
+	boolean insert(Point point, Size size, T element);
 
 	/**
 	 * Add a new element to the QuadTree
@@ -21,16 +22,18 @@ public interface PointQuadTree<T> extends QuadTree<T> {
 	 * @param x
 	 * @param y
 	 * @param element
+	 * @return true when the element could be inserted
 	 */
-	void insert(int x, int y, T element);
+	boolean insert(int x, int y, T element);
 
 	/**
 	 * Add a new element to the QuadTree
 	 * 
 	 * @param point
 	 * @param element
+	 * @return true when the element could be inserted
 	 */
-	void insert(Point point, T element);
+	boolean insert(Point point, T element);
 
 	/**
 	 * Returns the rootNode of this tree
@@ -38,4 +41,12 @@ public interface PointQuadTree<T> extends QuadTree<T> {
 	 * @return
 	 */
 	PointNode<T> getRootNode();
+
+	/**
+	 * Returns all elements within the cell that matches the given coordinates
+	 * 
+	 * @param coordinates
+	 * @return
+	 */
+	Vector<PointNodeElement<T>> getElements(Point coordinates);
 }

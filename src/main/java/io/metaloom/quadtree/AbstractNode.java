@@ -1,6 +1,7 @@
 package io.metaloom.quadtree;
 
 import java.util.Map;
+
 import io.metaloom.quadtree.point.Point;
 
 public abstract class AbstractNode<T> implements Node<T> {
@@ -13,20 +14,19 @@ public abstract class AbstractNode<T> implements Node<T> {
 	/**
 	 * Default value for max depth
 	 */
-	protected final static int MAX_DEPTH = 4;
+	protected final static long MAX_DEPTH = 4;
 
 	protected Size bounds;
 	protected Point startCoordinates;
-	protected int maxDepth;
+	protected long maxDepth;
 	protected int maxElements;
-	protected int depth;
+	protected long depth;
 
-	public AbstractNode(Point startCoordinates, Size bounds, int depth) {
+	public AbstractNode(Point startCoordinates, Size bounds, long depth) {
 		this(startCoordinates, bounds, depth, MAX_ELEMENTS, MAX_DEPTH);
 	}
 
-	public AbstractNode(Point startCoordinates, Size bounds, int depth,
-		int maxDepth, int maxElements) {
+	public AbstractNode(Point startCoordinates, Size bounds, long depth, int maxElements, long maxDepth) {
 		this.startCoordinates = startCoordinates;
 		this.bounds = bounds;
 		this.maxDepth = maxDepth;
@@ -50,22 +50,13 @@ public abstract class AbstractNode<T> implements Node<T> {
 	}
 
 	@Override
-	public int getDepth() {
+	public long getDepth() {
 		return depth;
 	}
 
 	@Override
-	public int getMaxDepth() {
+	public long getMaxDepth() {
 		return maxDepth;
 	}
-
-	@Override
-	public abstract void subdivide();
-
-	@Override
-	public abstract void clear();
-
-	@Override
-	public abstract Map<Cell, ? extends Node<T>> getSubNodes();
 
 }

@@ -4,22 +4,26 @@ import io.metaloom.quadtree.Size;
 
 public class SizeImpl implements Size {
 
-	private final int width;
-	private final int height;
+	private final long width;
+	private final long height;
 
-	public SizeImpl(int width, int height) {
+	public SizeImpl(long width, long height) {
 		this.width = width;
 		this.height = height;
 	}
 
 	@Override
-	public int height() {
+	public long height() {
 		return height;
 	}
 
 	@Override
-	public int width() {
+	public long width() {
 		return width;
 	}
 
+	@Override
+	public String toString() {
+		return "[" + width + ":" + height + "]";
+	}
 }

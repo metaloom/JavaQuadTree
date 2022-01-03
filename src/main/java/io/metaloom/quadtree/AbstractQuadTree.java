@@ -22,10 +22,4 @@ public abstract class AbstractQuadTree<T> implements QuadTree<T> {
 		return startCoordinates;
 	}
 
-	@Override
-	public abstract void clear();
-
-	@Override
-	public abstract Node<T> getRootNode();
-
 }

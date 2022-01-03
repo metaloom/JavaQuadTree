@@ -1,23 +1,27 @@
-package io.metaloom.quadtree;
+package io.metaloom.quadtree.point;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import io.metaloom.quadtree.point.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 import java.util.Vector;
 
-import io.metaloom.quadtree.gui.QuadTreePanel;
-import io.metaloom.quadtree.point.impl.PointNode;
-import io.metaloom.quadtree.point.impl.PointNodeElement;
+import io.metaloom.quadtree.Cell;
+import io.metaloom.quadtree.NodeElement;
+import io.metaloom.quadtree.QuadTreePanel;
+import io.metaloom.quadtree.Size;
+import io.metaloom.quadtree.point.Point;
+import io.metaloom.quadtree.point.PointNode;
+import io.metaloom.quadtree.point.PointNodeElement;
+import io.metaloom.quadtree.point.PointQuadTree;
 import io.metaloom.quadtree.point.impl.PointQuadTreeImpl;
 
 public class RenderPointQuadTree extends QuadTreePanel {
 
 	private static final long serialVersionUID = -2360219811620173423L;
 
-	protected PointQuadTreeImpl<String> tree;
+	protected PointQuadTree<String> tree;
 
 	protected Vector<PointNodeElement<String>> selectedElements = new Vector<>();
 
@@ -27,7 +31,7 @@ public class RenderPointQuadTree extends QuadTreePanel {
 
 	protected RenderPointQuadTree() {
 		tree = createQuadTree();
-		setupGui();
+		setupGui(670, 550);
 	}
 
 	/**
@@ -66,10 +70,10 @@ public class RenderPointQuadTree extends QuadTreePanel {
 		Size bounds = node.getBounds();
 		Point startCoordinates = node.getStartCoordinates();
 		// Draw node bounds
-		g.drawRect(startCoordinates.x(), startCoordinates.y(), bounds.width(), bounds.height());
+		g.drawRect((int) startCoordinates.x(), (int) startCoordinates.y(), (int) bounds.width(), (int) bounds.height());
 
 		// Draw subnodes
-		Map<Cell, PointNode<String>> subNodes = node.getSubNodes();
+		Map<Cell, ? extends PointNode<String>> subNodes = node.getSubNodes();
 		for (PointNode<String> subNode : subNodes.values()) {
 			drawCells(subNode, g);
 		}
@@ -84,7 +88,7 @@ public class RenderPointQuadTree extends QuadTreePanel {
 	public void drawSelectedElements(Graphics g) {
 		g.setColor(Color.RED);
 		for (NodeElement<String> element : selectedElements) {
-			g.drawOval(element.x() - 2, element.y() - 2, 4, 4);
+			g.drawOval((int) element.x() - 2, (int) element.y() - 2, 4, 4);
 		}
 		g.setColor(Color.BLACK);
 	}
@@ -97,8 +101,8 @@ public class RenderPointQuadTree extends QuadTreePanel {
 	public <T> void drawElements(PointNode<String> node, Graphics g) {
 		Vector<PointNodeElement<String>> elements = node.getElements();
 		for (PointNodeElement<String> element : elements) {
-			int x = element.x();
-			int y = element.y();
+			int x = (int) element.x();
+			int y = (int) element.y();
 			g.drawLine(x, y, x, y);
 		}
 	}
@@ -119,8 +123,8 @@ public class RenderPointQuadTree extends QuadTreePanel {
 
 		java.awt.Point p = e.getPoint();
 		// Somehow my mousepoints do not match the coordinates at the window (maybe this is a xorg releated bug)
-		p.x -= 8;
-		p.y -= 30;
+		p.x -= 0;
+		p.y -= 20;
 
 		if (e.getButton() == 1) {
 			try {

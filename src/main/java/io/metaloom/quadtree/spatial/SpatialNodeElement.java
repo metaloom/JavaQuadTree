@@ -4,12 +4,22 @@ import io.metaloom.quadtree.NodeElement;
 
 public interface SpatialNodeElement<T> extends NodeElement<T> {
 
-	int getWidth();
+	/**
+	 * Return the width that the element consumes within the {@link SpatialQuadTree}.
+	 * 
+	 * @return
+	 */
+	long getWidth();
 
-	int getHeight();
+	/**
+	 * Return the height of the element that it consumes within the {@link SpatialQuadTree}.
+	 * 
+	 * @return
+	 */
+	long getHeight();
 
-	void setY(int y);
+	void setY(long y);
 
-	void setX(int x);
+	void setX(long x);
 
 }

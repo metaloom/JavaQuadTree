@@ -4,10 +4,10 @@ import io.metaloom.quadtree.point.Point;
 
 public class PointImpl implements Point {
 
-	public int x;
-	public int y;
+	public long x;
+	public long y;
 
-	public PointImpl(int x, int y) {
+	public PointImpl(long x, long y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -18,23 +18,27 @@ public class PointImpl implements Point {
 	}
 
 	@Override
-	public int x() {
+	public long x() {
 		return x;
 	}
 
 	@Override
-	public int y() {
+	public long y() {
 		return y;
 	}
 
 	@Override
-	public void setX(int x) {
+	public void setX(long x) {
 		this.x = x;
 	}
 
 	@Override
-	public void setY(int y) {
+	public void setY(long y) {
 		this.y = y;
 	}
 
+	@Override
+	public String toString() {
+		return "[" + x + ":" + y + "]";
+	}
 }

@@ -1,4 +1,4 @@
-package io.metaloom.quadtree.gui;
+package io.metaloom.quadtree;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -24,14 +24,14 @@ public class QuadTreePanel extends JPanel implements KeyListener, MouseListener 
 
 	}
 
-	protected void setupGui() {
+	protected void setupGui(int width, int height) {
 		JFrame f = new JFrame();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.addKeyListener(this);
 		f.addMouseListener(this);
 		f.add(this);
 		f.setLocationRelativeTo(null);
-		f.setSize(700, 700);
+		f.setSize(width, height);
 		f.setVisible(true);
 	}
 

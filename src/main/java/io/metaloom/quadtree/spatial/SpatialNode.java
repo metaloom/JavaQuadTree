@@ -7,6 +7,11 @@ import io.metaloom.quadtree.Node;
 
 public interface SpatialNode<T> extends Node<T> {
 
+	/**
+	 * Return the node element which contains the actual data object.
+	 * 
+	 * @return
+	 */
 	SpatialNodeElement<T> getElement();
 
 	/**

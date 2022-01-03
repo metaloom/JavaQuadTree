@@ -36,15 +36,9 @@ public interface QuadTree<T> {
 	 * @param point
 	 * @param size
 	 * @param element
+	 * @return true when the element could be inserted
 	 */
-	void insert(Point point, Size elementSize, T element);
+	boolean insert(Point point, Size elementSize, T element);
 
-	/**
-	 * Insert the element with the given size in the next free cell
-	 * 
-	 * @param element
-	 * @param elementSize
-	 */
-	void insert(T element, Size elementSize);
 
 }

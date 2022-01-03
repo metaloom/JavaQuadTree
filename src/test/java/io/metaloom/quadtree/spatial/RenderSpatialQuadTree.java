@@ -1,4 +1,4 @@
-package io.metaloom.quadtree;
+package io.metaloom.quadtree.spatial;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,17 +8,17 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import io.metaloom.quadtree.gui.QuadTreePanel;
+import io.metaloom.quadtree.Cell;
+import io.metaloom.quadtree.QuadTreePanel;
+import io.metaloom.quadtree.Size;
 import io.metaloom.quadtree.point.Point;
-import io.metaloom.quadtree.spatial.SpatialNode;
-import io.metaloom.quadtree.spatial.SpatialNodeElement;
 import io.metaloom.quadtree.spatial.impl.SpatialQuadTreeImpl;
 
 public class RenderSpatialQuadTree extends QuadTreePanel {
 
 	private static final long serialVersionUID = -7363155496742737522L;
 
-	protected SpatialQuadTreeImpl<Image> tree;
+	protected SpatialQuadTree<Image> tree;
 
 	int untilDepth = 0;
 
@@ -35,7 +35,7 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 		} catch (IOException e) {
 			log.error("Could not load image.", e);
 		}
-		setupGui();
+		setupGui(700, 700);
 	}
 
 	/**
@@ -44,31 +44,31 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 	 * @return
 	 * @throws IOException
 	 */
-	protected SpatialQuadTreeImpl<Image> createSpatialQuadTree() throws IOException {
+	protected SpatialQuadTree<Image> createSpatialQuadTree() throws IOException {
 		Point startCoordinates = Point.of(100, 100);
 		Size size = Size.of(512, 512);
 
-		SpatialQuadTreeImpl<Image> tree = new SpatialQuadTreeImpl<>(startCoordinates, size);
+		SpatialQuadTree<Image> tree = new SpatialQuadTreeImpl<>(startCoordinates, size);
 
 		int elementSize = 32;
 		for (int i = 0; i < 56; i++) {
 			Size dimension = Size.of(elementSize, elementSize);
-			tree.insert(getRandomImage(elementSize), dimension);
+			tree.insert(dimension, getRandomImage(elementSize));
 		}
 		elementSize = 64;
 		for (int i = 0; i < 16; i++) {
 			Size dimension = Size.of(elementSize, elementSize);
-			tree.insert(getRandomImage(elementSize), dimension);
+			tree.insert(dimension, getRandomImage(elementSize));
 		}
 		elementSize = 128;
 		for (int i = 0; i < 3; i++) {
 			Size dimension = Size.of(elementSize, elementSize);
-			tree.insert(getRandomImage(elementSize), dimension);
+			tree.insert(dimension, getRandomImage(elementSize));
 		}
 		elementSize = 256;
 		for (int i = 0; i < 1; i++) {
 			Size dimension = Size.of(elementSize, elementSize);
-			tree.insert(getRandomImage(elementSize), dimension);
+			tree.insert(dimension, getRandomImage(elementSize));
 		}
 
 		return tree;
@@ -101,7 +101,7 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 		Size bounds = node.getBounds();
 		Point startCoordinates = node.getStartCoordinates();
 		// Draw node bounds
-		g.drawRect(startCoordinates.x(), startCoordinates.y(), bounds.width(), bounds.height());
+		g.drawRect((int) startCoordinates.x(), (int) startCoordinates.y(), (int) bounds.width(), (int) bounds.height());
 
 		// Draw subnodes
 		Map<Cell, ? extends SpatialNode<Image>> subNodes = node.getSubNodes();
@@ -133,9 +133,8 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 	public void drawElements(SpatialNode<Image> node, Graphics g) {
 		SpatialNodeElement<Image> element = node.getElement();
 		if (element != null) {
-			g.drawImage(element.getElement(), element.x(), element.y(), null);
+			g.drawImage(element.getElement(), (int)element.x(), (int)element.y(), null);
 		}
-
 	}
 
 }

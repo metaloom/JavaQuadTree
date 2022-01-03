@@ -13,7 +13,7 @@ public class SpatialQuadTreeImpl<T> extends AbstractQuadTree<T> implements Spati
 
 	protected static Logger log = LoggerFactory.getLogger(SpatialQuadTreeImpl.class);
 
-	protected SpatialNodeImpl<T> rootNode;
+	protected SpatialNode<T> rootNode;
 
 	/**
 	 * Create a new QuadTree with the give start coordinates and size
@@ -26,13 +26,19 @@ public class SpatialQuadTreeImpl<T> extends AbstractQuadTree<T> implements Spati
 		this.rootNode = new SpatialNodeImpl<T>(startCoordinates, size, 0);
 	}
 
+	public SpatialQuadTreeImpl(Point startCoordinates, Size size, long maxDepth, int maxChildren) {
+		super(startCoordinates, size);
+		this.rootNode = new SpatialNodeImpl<T>(startCoordinates, size, 0L, maxDepth, maxChildren);
+	}
+	
+
 	@Override
-	public void insert(T element, Size elementSize) {
-		rootNode.insert(new SpatialNodeElementImpl<T>(element, elementSize));
+	public boolean insert(Size elementSize, T element) {
+		return rootNode.insert(new SpatialNodeElementImpl<T>(element, elementSize));
 	}
 
 	@Override
-	public void insert(Point point, Size elementSize, T element) {
+	public boolean insert(Point point, Size elementSize, T element) {
 
 		// Check if the element coordinates are within bounds of the quadtree
 		if (point.x() > startCoordinates.x() + size.width() || point.x() < startCoordinates.x()) {
@@ -55,7 +61,7 @@ public class SpatialQuadTreeImpl<T> extends AbstractQuadTree<T> implements Spati
 				+ "] / [" + point.x() + elementSize.height() + "]");
 		}
 
-		rootNode.insert(new SpatialNodeElementImpl<T>(point, elementSize, element));
+		return rootNode.insert(new SpatialNodeElementImpl<T>(point, elementSize, element));
 
 	}
 

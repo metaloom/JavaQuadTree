@@ -21,12 +21,12 @@ public class SpatialNodeImpl<T> extends AbstractNode<T> implements SpatialNode<T
 
 	protected SpatialNodeElement<T> element;
 
-	public SpatialNodeImpl(Point startCoordinates, Size bounds, int depth) {
+	public SpatialNodeImpl(Point startCoordinates, Size bounds, long depth) {
 		super(startCoordinates, bounds, depth);
 	}
 
-	public SpatialNodeImpl(Point startCoordinates, Size bounds, int depth, int maxDepth, int maxChildren) {
-		super(startCoordinates, bounds, depth, maxDepth, maxChildren);
+	public SpatialNodeImpl(Point startCoordinates, Size bounds, long depth, long maxDepth, int maxChildren) {
+		super(startCoordinates, bounds, depth, maxChildren, maxDepth);
 	}
 
 	@Override
@@ -45,7 +45,9 @@ public class SpatialNodeImpl<T> extends AbstractNode<T> implements SpatialNode<T
 		boolean hSmaller = insertElement.getHeight() < this.getBounds().height();
 		boolean smaller = wSmaller && hSmaller;
 
-		log.debug("Inserting element " + insertElement.getHeight() + " - " + insertElement.getWidth());
+		if (log.isDebugEnabled()) {
+			log.debug("Inserting element " + insertElement.getHeight() + " - " + insertElement.getWidth());
+		}
 
 		// Check if the element fits into this node
 		if (fits && nodes.size() == 0) {
@@ -74,6 +76,12 @@ public class SpatialNodeImpl<T> extends AbstractNode<T> implements SpatialNode<T
 				}
 			}
 		}
+		if (!fits) {
+			if (log.isDebugEnabled()) {
+				log.debug(
+					"The node element does not fit in the bounds of this element. Most likely also subdivison did not help to find a place for it. Maybe the max depth was reached before a suitable place could be found");
+			}
+		}
 
 		return false;
 	}
@@ -86,18 +94,18 @@ public class SpatialNodeImpl<T> extends AbstractNode<T> implements SpatialNode<T
 		if (log.isDebugEnabled()) {
 			log.debug("Subdividing node at depth " + depth);
 		}
-		int depth = this.depth + 1;
+		long depth = this.depth + 1;
 
-		int bx = startCoordinates.x();
-		int by = startCoordinates.y();
+		long bx = startCoordinates.x();
+		long by = startCoordinates.y();
 
 		// Create the bounds for the new cell
 		Size newBounds = Size.of(bounds.width() / 2, bounds.height() / 2);
 
 		// Add new bounds to current start coordinates to calculate the new
 		// start coordinates
-		int newXStartCoordinate = bx + newBounds.width();
-		int newYStartCoordinate = by + newBounds.height();
+		long newXStartCoordinate = bx + newBounds.width();
+		long newYStartCoordinate = by + newBounds.height();
 
 		SpatialNodeImpl<T> cellNode = null;
 
@@ -137,6 +145,11 @@ public class SpatialNodeImpl<T> extends AbstractNode<T> implements SpatialNode<T
 	 */
 	public Map<Cell, SpatialNode<T>> getSubNodes() {
 		return this.nodes;
+	}
+
+	@Override
+	public String toString() {
+		return "depth: " + getDepth() + " dim:" + getBounds() + " @ " + getStartCoordinates();
 	}
 
 }

@@ -25,19 +25,30 @@ public interface Node<T> {
 	 * 
 	 * @return
 	 */
-	int getDepth();
+	long getDepth();
 
 	/**
 	 * Returns the max depth
 	 * 
 	 * @return
 	 */
-	int getMaxDepth();
+	long getMaxDepth();
 
+	/**
+	 * Recursively clear all elements
+	 */
 	void clear();
 
+	/**
+	 * Divide this node so that additional sub nodes can be stored.
+	 */
 	void subdivide();
 
+	/**
+	 * Return the sub node data of this node.
+	 * 
+	 * @return
+	 */
 	Map<Cell, ? extends Node<T>> getSubNodes();
 
 	/**

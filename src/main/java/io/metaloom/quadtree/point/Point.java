@@ -7,18 +7,31 @@ import io.metaloom.quadtree.point.impl.PointImpl;
  */
 public interface Point {
 
-	int x();
+	long x();
 
-	int y();
+	long y();
 
-	void setX(int x);
+	void setX(long x);
 
-	void setY(int y);
+	void setY(long y);
 
-	static Point of(int x, int y) {
+	/**
+	 * Create a new point with the given coordinates.
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	static Point of(long x, long y) {
 		return new PointImpl(x, y);
 	}
 
+	/**
+	 * Create a new point based on a {@link java.awt.Point} object data.
+	 * 
+	 * @param p
+	 * @return
+	 */
 	static Point of(java.awt.Point p) {
 		return new PointImpl(p.x, p.y);
 	}

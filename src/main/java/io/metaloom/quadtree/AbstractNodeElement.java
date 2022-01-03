@@ -33,22 +33,22 @@ public abstract class AbstractNodeElement<T> implements NodeElement<T> {
 	}
 
 	@Override
-	public int x() {
+	public long x() {
 		return coordinates.x();
 	}
 
 	@Override
-	public int y() {
+	public long y() {
 		return coordinates.y();
 	}
 
 	@Override
-	public void setX(int x) {
+	public void setX(long x) {
 		coordinates.setX(x);
 	}
 
 	@Override
-	public void setY(int y) {
+	public void setY(long y) {
 		coordinates.setY(y);
 	}
 }

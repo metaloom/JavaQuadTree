@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>at.jotschi</groupId>
-	<artifactId>QuadTree</artifactId>
+	<groupId>io.metaloom.quadtree</groupId>
+	<artifactId>quadtree</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -14,11 +14,21 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<name>QuadTree</name>
-	<url>http://maven.apache.org</url>
+	<name>quadtree</name>
+	<url>https://github.com/metaloom/JavaQuadTree</url>
+	<description>A very basic quad tree implementation</description>
+	<inceptionYear>2011</inceptionYear>
+
+	<scm>
+		<connection>scm:git:git@github.com:metaloom/JavaQuadTree.git</connection>
+		<developerConnection>scm:git:git@github.com:metaloom/JavaQuadTree.git</developerConnection>
+		<url>https://github.com/metaloom/JavaQuadTree</url>
+		<tag>HEAD</tag>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.github.repository>metaloom/JavaQuadTree</project.github.repository>
 	</properties>
 
 	<dependencies>

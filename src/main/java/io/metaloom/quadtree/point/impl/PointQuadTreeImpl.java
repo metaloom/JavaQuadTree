@@ -5,6 +5,7 @@ import java.util.Vector;
 import io.metaloom.quadtree.AbstractQuadTree;
 import io.metaloom.quadtree.Size;
 import io.metaloom.quadtree.point.Point;
+import io.metaloom.quadtree.point.PointNodeElement;
 import io.metaloom.quadtree.point.PointQuadTree;
 
 /**
@@ -14,7 +15,7 @@ import io.metaloom.quadtree.point.PointQuadTree;
  */
 public class PointQuadTreeImpl<T> extends AbstractQuadTree<T> implements PointQuadTree<T> {
 
-	protected PointNode<T> rootNode;
+	protected PointNodeImpl<T> rootNode;
 
 	/**
 	 * Create a new QuadTree with the give start coordinates and size
@@ -24,21 +25,21 @@ public class PointQuadTreeImpl<T> extends AbstractQuadTree<T> implements PointQu
 	 */
 	public PointQuadTreeImpl(Point startCoordinates, Size size) {
 		super(startCoordinates, size);
-		this.rootNode = new PointNode<T>(startCoordinates, size, 0);
+		this.rootNode = new PointNodeImpl<T>(startCoordinates, size, 0);
 	}
 
 	public PointQuadTreeImpl(Point startCoordinates, Size size, int maxDepth, int maxChildren) {
 		super(startCoordinates, size);
-		this.rootNode = new PointNode<T>(startCoordinates, size, 0, maxDepth, maxChildren);
+		this.rootNode = new PointNodeImpl<T>(startCoordinates, size, 0, maxDepth, maxChildren);
 	}
 
 	@Override
-	public void insert(int x, int y, T element) {
-		insert(Point.of(x, y), element);
+	public boolean insert(int x, int y, T element) {
+		return insert(Point.of(x, y), element);
 	}
 
 	@Override
-	public void insert(Point point, Size size, T element) {
+	public boolean insert(Point point, Size size, T element) {
 
 		// Check if the element coordinates are within bounds of the quadtree
 		if (point.x() > startCoordinates.x() + size.width() || point.x() < startCoordinates.x()) {
@@ -58,17 +59,12 @@ public class PointQuadTreeImpl<T> extends AbstractQuadTree<T> implements PointQu
 				"The y coordinate must be within bounds of [" + startCoordinates.y() + "] to [" + size.height() + "]");
 		}
 
-		rootNode.insert(new PointNodeElement<T>(point, element));
+		return rootNode.insert(new PointNodeElementImpl<T>(point, element));
 
 	}
 
 	@Override
-	public void insert(T element, Size elementSize) {
-		throw new RuntimeException("Not supported for point quad trees");
-	}
-
-	@Override
-	public void insert(Point point, T element) {
+	public boolean insert(Point point, T element) {
 
 		// Check if the element coordinates are within bounds of the quadtree
 		if (point.x() > startCoordinates.x() + size.width() || point.x() < startCoordinates.x()) {
@@ -79,20 +75,15 @@ public class PointQuadTreeImpl<T> extends AbstractQuadTree<T> implements PointQu
 				"The y coordinate must be within bounds of [" + startCoordinates.y() + "] to [" + size.height() + "]");
 		}
 
-		rootNode.insert(new PointNodeElement<T>(point, element));
+		return rootNode.insert(new PointNodeElementImpl<T>(point, element));
 	}
 
 	@Override
-	public PointNode<T> getRootNode() {
+	public PointNodeImpl<T> getRootNode() {
 		return rootNode;
 	}
 
-	/**
-	 * Returns all elements within the cell that matches the given coordinates
-	 * 
-	 * @param coordinates
-	 * @return
-	 */
+	@Override
 	public Vector<PointNodeElement<T>> getElements(Point coordinates) {
 		return rootNode.getElements(coordinates);
 	}
