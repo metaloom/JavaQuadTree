@@ -1,10 +1,9 @@
-package at.jotschi.quadtree.point;
+package io.metaloom.quadtree.point.impl;
 
-import java.awt.Point;
 
-import at.jotschi.quadtree.AbstractNodeElement;
+import io.metaloom.quadtree.AbstractNodeElement;
+import io.metaloom.quadtree.point.Point;
 
-@SuppressWarnings("serial")
 public class PointNodeElement<T> extends AbstractNodeElement<T> {
 
 	public PointNodeElement(Point coordinates, T element) {

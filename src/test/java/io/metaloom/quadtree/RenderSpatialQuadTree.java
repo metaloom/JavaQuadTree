@@ -1,25 +1,24 @@
-package at.jotschi.quadtree;
+package io.metaloom.quadtree;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import at.jotschi.quadtree.AbstractNode.Cell;
-import at.jotschi.quadtree.gui.QuadTreePanel;
-import at.jotschi.quadtree.spacial.SpatialNode;
-import at.jotschi.quadtree.spacial.SpatialNodeElement;
-import at.jotschi.quadtree.spacial.SpatialQuadTree;
+import io.metaloom.quadtree.gui.QuadTreePanel;
+import io.metaloom.quadtree.point.Point;
+import io.metaloom.quadtree.spatial.SpatialNode;
+import io.metaloom.quadtree.spatial.SpatialNodeElement;
+import io.metaloom.quadtree.spatial.impl.SpatialQuadTreeImpl;
 
-@SuppressWarnings("serial")
 public class RenderSpatialQuadTree extends QuadTreePanel {
 
-	protected SpatialQuadTree<Image> tree;
+	private static final long serialVersionUID = -7363155496742737522L;
+
+	protected SpatialQuadTreeImpl<Image> tree;
 
 	int untilDepth = 0;
 
@@ -45,31 +44,30 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 	 * @return
 	 * @throws IOException
 	 */
-	protected SpatialQuadTree<Image> createSpatialQuadTree() throws IOException {
+	protected SpatialQuadTreeImpl<Image> createSpatialQuadTree() throws IOException {
+		Point startCoordinates = Point.of(100, 100);
+		Size size = Size.of(512, 512);
 
-		Point startCoordinates = new Point(100, 100);
-		Dimension size = new Dimension(512, 512);
-
-		SpatialQuadTree<Image> tree = new SpatialQuadTree<Image>(startCoordinates, size);
+		SpatialQuadTreeImpl<Image> tree = new SpatialQuadTreeImpl<>(startCoordinates, size);
 
 		int elementSize = 32;
 		for (int i = 0; i < 56; i++) {
-			Dimension dimension = new Dimension(elementSize, elementSize);
+			Size dimension = Size.of(elementSize, elementSize);
 			tree.insert(getRandomImage(elementSize), dimension);
 		}
 		elementSize = 64;
 		for (int i = 0; i < 16; i++) {
-			Dimension dimension = new Dimension(elementSize, elementSize);
+			Size dimension = Size.of(elementSize, elementSize);
 			tree.insert(getRandomImage(elementSize), dimension);
 		}
 		elementSize = 128;
 		for (int i = 0; i < 3; i++) {
-			Dimension dimension = new Dimension(elementSize, elementSize);
+			Size dimension = Size.of(elementSize, elementSize);
 			tree.insert(getRandomImage(elementSize), dimension);
 		}
 		elementSize = 256;
 		for (int i = 0; i < 1; i++) {
-			Dimension dimension = new Dimension(elementSize, elementSize);
+			Size dimension = Size.of(elementSize, elementSize);
 			tree.insert(getRandomImage(elementSize), dimension);
 		}
 
@@ -94,39 +92,37 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 	}
 
 	protected void paintComponent(Graphics g) {
-
 		g.drawString("Hit space key to draw elements of the next level of the quadtree.", 100, 80);
 		SpatialNode<Image> rootNode = tree.getRootNode();
 		drawCells(rootNode, g);
 	}
 
 	protected void drawCells(SpatialNode<Image> node, Graphics g) {
-		Dimension bounds = node.getBounds();
+		Size bounds = node.getBounds();
 		Point startCoordinates = node.getStartCoordinates();
 		// Draw node bounds
-		g.drawRect(startCoordinates.x, startCoordinates.y, bounds.width, bounds.height);
+		g.drawRect(startCoordinates.x(), startCoordinates.y(), bounds.width(), bounds.height());
 
 		// Draw subnodes
-		Map<Cell, SpatialNode<Image>> subNodes = node.getSubNodes();
+		Map<Cell, ? extends SpatialNode<Image>> subNodes = node.getSubNodes();
 		for (SpatialNode<Image> subNode : subNodes.values()) {
 			drawCells(subNode, g);
 		}
 
 		// Draw areas of this node
-		if (node.getDepth() == untilDepth)
+		if (node.getDepth() == untilDepth) {
 			drawElements(node, g);
+		}
 
 	}
 
 	public void keyReleased(KeyEvent e) {
-
 		if (e.getKeyCode() == 27) {
 			System.exit(10);
 		} else if (e.getKeyCode() == 32) {
 			untilDepth++;
 			repaint();
 		}
-
 	}
 
 	/**
@@ -135,10 +131,9 @@ public class RenderSpatialQuadTree extends QuadTreePanel {
 	 * @param g
 	 */
 	public void drawElements(SpatialNode<Image> node, Graphics g) {
-
 		SpatialNodeElement<Image> element = node.getElement();
 		if (element != null) {
-			g.drawImage(element.getElement(), (int) element.getX(), (int) element.getY(), null);
+			g.drawImage(element.getElement(), element.x(), element.y(), null);
 		}
 
 	}

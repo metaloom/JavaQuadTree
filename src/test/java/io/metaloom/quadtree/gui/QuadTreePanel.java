@@ -1,4 +1,4 @@
-package at.jotschi.quadtree.gui;
+package io.metaloom.quadtree.gui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -8,13 +8,14 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("serial")
 public class QuadTreePanel extends JPanel implements KeyListener, MouseListener {
 
-	
-	protected static Logger log = Logger.getLogger(QuadTreePanel.class);
+	private static final long serialVersionUID = 8763986244017440078L;
+
+	protected static Logger log = LoggerFactory.getLogger(QuadTreePanel.class);
 
 	/**
 	 * Create a new panel
@@ -35,13 +36,11 @@ public class QuadTreePanel extends JPanel implements KeyListener, MouseListener 
 	}
 
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		// NOOP
 	}
 
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		// NOOP
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -53,27 +52,22 @@ public class QuadTreePanel extends JPanel implements KeyListener, MouseListener 
 	}
 
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		// NOOP
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		// NOOP
 	}
 
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		// NOOP
 	}
 
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		// NOOP
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		// NOOP
 	}
 }

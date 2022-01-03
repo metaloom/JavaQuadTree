@@ -1,28 +1,27 @@
-package at.jotschi.quadtree.point;
+package io.metaloom.quadtree.point.impl;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import at.jotschi.quadtree.AbstractNode;
-import at.jotschi.quadtree.AbstractNodeElement;
+import io.metaloom.quadtree.AbstractNode;
+import io.metaloom.quadtree.AbstractNodeElement;
+import io.metaloom.quadtree.Cell;
+import io.metaloom.quadtree.Size;
+import io.metaloom.quadtree.point.Point;
 
 /**
- * Node that represents each 'cell' within the quadtree. The Node will contains
- * elements {@link AbstractNodeElement} that itself will contain the final data
- * within the tree.
- * 
- * @author jotschi
+ * This is a Node that represents each 'cell' within the quadtree. The Node will contains elements {@link AbstractNodeElement} that itself will contain the
+ * final data within the tree.
  * 
  * @param <T>
  */
-public class PointNode<T> extends AbstractNode {
+public class PointNode<T> extends AbstractNode<T> {
 
-	protected static Logger log = Logger.getLogger(PointNode.class);
+	protected static Logger log = LoggerFactory.getLogger(PointNode.class);
 
 	protected Map<Cell, PointNode<T>> nodes = new HashMap<Cell, PointNode<T>>();
 
@@ -31,7 +30,7 @@ public class PointNode<T> extends AbstractNode {
 	 */
 	protected Vector<PointNodeElement<T>> elements = new Vector<PointNodeElement<T>>();
 
-	public PointNode(Point startCoordinates, Dimension bounds, int depth) {
+	public PointNode(Point startCoordinates, Size bounds, int depth) {
 		super(startCoordinates, bounds, depth);
 		log.debug("Creating new Node at depth " + depth);
 	}
@@ -44,8 +43,8 @@ public class PointNode<T> extends AbstractNode {
 	 * @param maxDepth
 	 * @param maxChildren
 	 */
-	public PointNode(Point startCoordinates, Dimension bounds, int depth,
-			int maxDepth, int maxChildren) {
+	public PointNode(Point startCoordinates, Size bounds, int depth,
+		int maxDepth, int maxChildren) {
 		super(startCoordinates, bounds, depth, maxDepth, maxChildren);
 		log.debug("Creating new Node at depth " + depth);
 	}
@@ -67,10 +66,8 @@ public class PointNode<T> extends AbstractNode {
 	 */
 	protected Cell findIndex(Point coordinates) {
 		// Compute the sector for the coordinates
-		boolean left = (coordinates.x > (startCoordinates.x + bounds.width / 2)) ? false
-				: true;
-		boolean top = (coordinates.y > (startCoordinates.y + bounds.height / 2)) ? false
-				: true;
+		boolean left = (coordinates.x() > (startCoordinates.x() + bounds.width() / 2)) ? false : true;
+		boolean top = (coordinates.y() > (startCoordinates.y() + bounds.height() / 2)) ? false : true;
 
 		// top left
 		Cell index = Cell.TOP_LEFT;
@@ -91,8 +88,9 @@ public class PointNode<T> extends AbstractNode {
 
 			}
 		}
-		log.debug("Coordinate [" + coordinates.x + "-" + coordinates.y
-				+ "] is within " + index.toString() + " at depth " + depth);
+		if (log.isDebugEnabled()) {
+			log.debug("Coordinate [" + coordinates.x() + "-" + coordinates.y() + "] is within " + index.toString() + " at depth " + depth);
+		}
 		return index;
 	}
 
@@ -125,8 +123,7 @@ public class PointNode<T> extends AbstractNode {
 	}
 
 	/**
-	 * Insert the element into this node. If needed a subdivision will be
-	 * performed
+	 * Insert the element into this node. If needed a subdivision will be performed
 	 * 
 	 * @param element
 	 */
@@ -169,39 +166,33 @@ public class PointNode<T> extends AbstractNode {
 		log.debug("Subdividing node at depth " + depth);
 		int depth = this.depth + 1;
 
-		int bx = this.startCoordinates.x;
-		int by = this.startCoordinates.y;
+		int bx = this.startCoordinates.x();
+		int by = this.startCoordinates.y();
 
 		// Create the bounds for the new cell
-		Dimension newBounds = new Dimension(this.bounds.width / 2,
-				this.bounds.height / 2);
+		Size newBounds = Size.of(bounds.width() / 2, bounds.height() / 2);
 
 		// Add new bounds to current start coordinates to calculate the new
 		// start coordinates
-		int newXStartCoordinate = bx + newBounds.width;
-		int newYStartCoordinate = by + newBounds.height;
+		int newXStartCoordinate = bx + newBounds.width();
+		int newYStartCoordinate = by + newBounds.height();
 
 		PointNode<T> cellNode = null;
 
 		// top left
-		cellNode = new PointNode<T>(new Point(bx, by), newBounds, depth,
-				this.maxDepth, this.maxElements);
+		cellNode = new PointNode<T>(Point.of(bx, by), newBounds, depth, this.maxDepth, this.maxElements);
 		this.nodes.put(Cell.TOP_LEFT, cellNode);
 
 		// top right
-		cellNode = new PointNode<T>(new Point(newXStartCoordinate, by),
-				newBounds, depth, this.maxDepth, this.maxElements);
+		cellNode = new PointNode<T>(Point.of(newXStartCoordinate, by), newBounds, depth, this.maxDepth, this.maxElements);
 		this.nodes.put(Cell.TOP_RIGHT, cellNode);
 
 		// bottom left
-		cellNode = new PointNode<T>(new Point(bx, newYStartCoordinate),
-				newBounds, depth, this.maxDepth, this.maxElements);
+		cellNode = new PointNode<T>(Point.of(bx, newYStartCoordinate), newBounds, depth, this.maxDepth, this.maxElements);
 		this.nodes.put(Cell.BOTTOM_LEFT, cellNode);
 
 		// bottom right
-		cellNode = new PointNode<T>(new Point(newXStartCoordinate,
-				newYStartCoordinate), newBounds, depth, this.maxDepth,
-				this.maxElements);
+		cellNode = new PointNode<T>(Point.of(newXStartCoordinate, newYStartCoordinate), newBounds, depth, this.maxDepth, this.maxElements);
 		this.nodes.put(Cell.BOTTOM_RIGHT, cellNode);
 	}
 
