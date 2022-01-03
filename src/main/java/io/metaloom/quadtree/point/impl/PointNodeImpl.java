@@ -64,9 +64,9 @@ public class PointNodeImpl<T> extends AbstractNode<T> implements PointNode<T> {
 	}
 
 	/**
-	 * Returns the cell of this element
+	 * Returns the cell which matches the coordinates.
 	 * 
-	 * @param element
+	 * @param coordinates
 	 * @return
 	 */
 	protected Cell findIndex(Point coordinates) {

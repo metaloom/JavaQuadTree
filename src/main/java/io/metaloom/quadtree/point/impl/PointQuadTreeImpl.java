@@ -20,7 +20,7 @@ public class PointQuadTreeImpl<T> extends AbstractQuadTree<T> implements PointQu
 	/**
 	 * Create a new QuadTree with the give start coordinates and size
 	 * 
-	 * @param startCorrdinates
+	 * @param startCoordinates
 	 * @param size
 	 */
 	public PointQuadTreeImpl(Point startCoordinates, Size size) {

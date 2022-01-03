@@ -34,7 +34,7 @@ public interface QuadTree<T> {
 	 * Add a new element to the QuadTree that has a specific dimension/size
 	 * 
 	 * @param point
-	 * @param size
+	 * @param elementSize
 	 * @param element
 	 * @return true when the element could be inserted
 	 */
